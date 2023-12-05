@@ -2,7 +2,7 @@ import '../styles/login.css';
 
 export default function Login() {
   return (
-    <div className="flex bg-gradient-to-tr from-[#5A72BC] to-[#AD15F4] w-screen items-center justify-center">
+    <div className="flex items-center justify-center">
       <div className="flex w-200 w-[90%] h-screen justify-center items-center">
         <div className="flex bg-white w-[50%] h-[86%] text-red-900 rounded-l-[30px] text-center items-center justify-center">
           <h1>Welcome Back!</h1>

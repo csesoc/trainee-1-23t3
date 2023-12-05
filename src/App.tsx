@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import Login from './pages/Login'
 import Catalogue from './pages/Catalogue';
+import './App.css';
 
 function App() {
   return (
