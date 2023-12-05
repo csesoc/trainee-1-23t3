@@ -6,8 +6,8 @@ import './App.css';
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Login/>}/>
-      <Route path="/catalogue" element={<Catalogue/>}/>
+      <Route path="/" element={<Catalogue />} />
+      <Route path="/login" element={<Login />} />
     </Routes>
   )
 }
