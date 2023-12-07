@@ -4,11 +4,9 @@ import { SERVER_PORT } from '../../config.json';
 
 const app = express();
 
-app.use(express.static(join(__dirname, '../../client/dist')));
-
-
 app.get('/', (req: Request, res: Response) => {
-  res.send('Hello, TypeScript with Express :))))!');
+  console.log('Hello, TypeScript with Express :)))!');
+  res.send('Hello, TypeScript with Express :)))!');
 });
 
 app.listen(SERVER_PORT, () => {
