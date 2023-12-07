@@ -8,7 +8,13 @@
 
 ## Run the app
 
-`npm run dev`
+`npm run dev` in `client/`.
+
+## Backend 
+
+This app now also uses a backend. Initialise it by running
+
+`npm run start` in `server/`
 
 ## Contributing
 
