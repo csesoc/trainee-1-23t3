@@ -1,9 +1,6 @@
-interface SpaceCard {
-	title: string,
-	image: string
-};
+import { SpaceData } from "./types";
 
-const SpaceCard = ({ title, image }: SpaceCard) => {
+const SpaceCard = ({ title, image }: SpaceData) => {
 	const handleClick = () => {
 		alert(`Clicked on \"${title}\" card`)
 	};

@@ -1,12 +1,27 @@
 import { useState } from "react";
+
 import searchIcon from "../assets/search-icon.png";
+import { SpaceData } from "./types";
 
-
-const SearchInput = () => {
+const SearchInput = ({ data, setData }) => {
 	const [searchQuery, setSearchQuery] = useState("");
 
 	const handleSearch = () => {
-		alert(`You cliked the search button with query \"${searchQuery}\"`);
+		let data1d: SpaceData[] = [].concat(...data);
+
+		const filteredData1d = data1d.filter(space => {
+			const title = space.title.toLowerCase();
+			const query = searchQuery.toLowerCase();
+			return title.includes(query);
+		});
+
+		const filteredData = [];
+		while (filteredData1d.length) filteredData.push(filteredData1d.splice(0, 5));
+
+		const lastRow = filteredData[filteredData.length - 1];
+		filteredData[filteredData.length - 1] = Array.from({ ...lastRow, length: 5 })
+
+		setData(filteredData);
 	};
 
 	return (
