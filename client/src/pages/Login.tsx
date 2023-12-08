@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import '../styles/login.css';
 import loginImage from '../assets/login-image.png';
+import { getAxios } from '../axiosconfig';
+import { AxiosResponse } from 'axios';
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -8,7 +10,17 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = () => {
-    alert(`Email: ${email} and Password: ${password}`)
+    getAxios()
+      .post('/login', {
+        email: email,
+        password: password
+      })
+      .then((res: AxiosResponse) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
