@@ -30,7 +30,7 @@ export default function Login() {
                 <circle className={showPassword ? "block" : "hidden"} cx="12" cy="12" r="3" />
               </svg>
             </button>
-            <a className="absolute right-0 -bottom-3" href="/login">Forgot password?</a>
+            <a className="absolute right-0 -bottom-3" href="/forgot">Forgot password?</a>
           </div>
           <button className="w-[40%] bg-[#61296f] hover:bg-[#311538] text-xl text-white font-bold py-4 px-4 rounded-full" onClick={handleSubmit}>Log in</button>
           <div className="flex mt-20 gap-2">

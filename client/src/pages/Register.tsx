@@ -7,6 +7,7 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
   // Reset error message
   useEffect(() => {
     setErrorMessage("");
@@ -24,7 +25,7 @@ export default function Register() {
       <div className="flex w-200 w-[90%] h-screen justify-center items-center">
         <div className="flex flex-col justify-center bg-white shadow-2xl w-[70%] h-[86%] text-black rounded-[30px]">
           <div className={`${errorMessage ? 'bg-red-500 text-white text-center p-2 rounded mx-auto my-2 max-w-sm' : 'invisible'} my-2 h-10`}>
-              {errorMessage}
+            {errorMessage}
           </div>
           <div className="flex flex-col items-center justify-center mb-[5%]">
             <h1 className="w-[55%] mb-[3%] text-4xl font-bold text-left" style={{}}>Sign up</h1>
