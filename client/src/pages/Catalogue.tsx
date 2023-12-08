@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Header from "../components/Header";
 import SearchInput from "../components/SearchInput";
@@ -6,6 +6,8 @@ import Sidebar from "../components/Sidebar";
 import Spaces from "../components/Spaces";
 
 import spaceImage from "../assets/spaces/unsw-library.jpg";
+import axios, { AxiosResponse } from "axios";
+import { getAxios } from "../axiosconfig";
 
 //////// HARDCODED DATA, DELETE LATER. ////////
 const allSpaces = [
@@ -81,6 +83,18 @@ const allSpaces = [
 
 export default function Catalogue() {
   const [data, setData] = useState(allSpaces);
+
+  useEffect(() => {
+    getAxios()
+      .get('/catalogue')
+      .then((res: AxiosResponse) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally()
+  });
 
   return (
     <div className="flex flex-row items-center justify-center">
