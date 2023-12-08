@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        'custom-purple': '#D17BFA', // This is your custom color
+        'custom-purple': '#D17BFA',
       },
     },
   },

@@ -11,11 +11,11 @@ const Sidebar = () => {
 	};
 
 	return (
-		<div className="flex flex-col pb-10 gap-3 absolute left-[2%] bottom-[7%] bg-[#d9d9d9] w-[3%] h-[77.6%] text-black rounded-l-[30px] items-center justify-end">
-			<button className="w-8 h-8" onClick={handleHome}>
+		<div className="flex flex-col pb-10 gap-7 absolute left-[2%] bottom-[7%] bg-[#d9d9d9] w-[3%] h-[77.6%] text-black rounded-l-[30px] items-center justify-end">
+			<button className="w-6 h-6" onClick={handleHome}>
 				<img src={homeIcon} />
 			</button>
-			<button className="w-8 h-8" onClick={handleLogout}>
+			<button className="w-6 h-6" onClick={handleLogout}>
 				<img src={logoutIcon} />
 			</button>
 		</div>
