@@ -10,7 +10,7 @@ const Header = () => {
 				</a>
 				<a
 					className="text-xl font-extrabold"
-					href="/login">
+					href="/register">
 					Register
 				</a>
 			</div>

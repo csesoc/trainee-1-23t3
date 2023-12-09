@@ -11,10 +11,13 @@ const ForgotPasswordForm = () => {
 	// Reset error message
 	useEffect(() => {
 		setErrorMessage("");
-	}, [password, confirmPassword]);
+	}, [email, password, confirmPassword]);
 
 	const handleSubmit = () => {
-		if (password !== confirmPassword) {
+		if (email.trim() === "" || password.trim() === "") {
+			setErrorMessage("Fields can not be empty.");  // Set error message
+			return;
+		} else if (password !== confirmPassword) {
 			setErrorMessage("Passwords do not match.");  // Set error message
 			return;
 		}

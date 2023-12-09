@@ -12,10 +12,13 @@ const RegisterForm = () => {
 	// Reset error message
 	useEffect(() => {
 		setErrorMessage("");
-	}, [password, confirmPassword]);
+	}, [username, email, password, confirmPassword]);
 
 	const handleSubmit = () => {
-		if (password !== confirmPassword) {
+		if (username.trim() === "" || email.trim() === "" || password.trim() === "") {
+			setErrorMessage("Fields can not be empty.");  // Set error message
+			return;
+		} else if (password !== confirmPassword) {
 			setErrorMessage("Passwords do not match.");  // Set error message
 			return;
 		}
