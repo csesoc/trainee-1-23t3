@@ -3,7 +3,7 @@ import { useState } from "react";
 import searchIcon from "../assets/search-icon.png";
 import { SpaceData } from "./types";
 
-const SearchInput = ({ data, setData }) => {
+const SearchInput = ({ data, setData }: { data: any, setData: Function }) => {
 	const [searchQuery, setSearchQuery] = useState("");
 
 	const handleSearch = () => {
