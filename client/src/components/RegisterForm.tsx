@@ -1,4 +1,8 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getAxios } from '../axiosconfig';
+import { AxiosResponse } from 'axios';
+
 import TextInput from './TextInput';
 import PasswordInput from './PasswordInput';
 
@@ -8,6 +12,8 @@ const RegisterForm = () => {
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
+
+	const navigate = useNavigate();
 
 	// Reset error message
 	useEffect(() => {
@@ -22,7 +28,20 @@ const RegisterForm = () => {
 			setErrorMessage("Passwords do not match.");  // Set error message
 			return;
 		}
-		alert(`Username: ${username} Email: ${email} and Password: ${password} and confirmPassword: ${confirmPassword}`)
+
+		getAxios()
+			.post('/register', {
+				username: username,
+				email: email,
+				password: password
+			})
+			.then((res: AxiosResponse) => {
+				localStorage.setItem("email", res.data.email);
+				navigate("/");
+			})
+			.catch((err) => {
+				setErrorMessage(err.response.data.message);  // Set error message
+			});
 	};
 
 	return (

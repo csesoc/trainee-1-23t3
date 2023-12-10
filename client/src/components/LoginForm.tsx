@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getAxios } from '../axiosconfig';
 import { AxiosResponse } from 'axios';
+
 import TextInput from './TextInput';
 import PasswordInput from './PasswordInput';
 
@@ -8,6 +10,8 @@ const LoginForm = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
+
+	const navigate = useNavigate();
 
 	// Reset error message
 	useEffect(() => {
@@ -26,10 +30,11 @@ const LoginForm = () => {
 				password: password
 			})
 			.then((res: AxiosResponse) => {
-				console.log(res.data);
+				localStorage.setItem("email", res.data.email);
+				navigate("/");
 			})
 			.catch((err) => {
-				console.log(err);
+				setErrorMessage(err.response.data.message);  // Set error message
 			});
 	};
 

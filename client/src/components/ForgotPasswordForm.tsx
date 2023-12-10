@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getAxios } from '../axiosconfig';
+
 import TextInput from './TextInput';
 import PasswordInput from './PasswordInput';
 
@@ -7,6 +10,8 @@ const ForgotPasswordForm = () => {
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
+
+	const navigate = useNavigate();
 
 	// Reset error message
 	useEffect(() => {
@@ -21,7 +26,18 @@ const ForgotPasswordForm = () => {
 			setErrorMessage("Passwords do not match.");  // Set error message
 			return;
 		}
-		alert(`Email: ${email} and New password: ${password}`);
+
+		getAxios()
+			.put('/forgot', {
+				email: email,
+				password: password
+			})
+			.then(() => {
+				navigate("/login");
+			})
+			.catch((err) => {
+				setErrorMessage(err.response.data.message);  // Set error message
+			});
 	};
 
 	return (
