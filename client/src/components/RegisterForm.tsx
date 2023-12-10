@@ -36,7 +36,7 @@ const RegisterForm = () => {
 				password: password
 			})
 			.then((res: AxiosResponse) => {
-				localStorage.setItem("email", res.data.email);
+				localStorage.setItem("username", res.data.username);
 				navigate("/");
 			})
 			.catch((err) => {

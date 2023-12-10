@@ -7,7 +7,7 @@ const Sidebar = () => {
 	};
 
 	const handleLogout = () => {
-		localStorage.removeItem("email");
+		localStorage.removeItem("username");
 		window.location.reload();
 	};
 

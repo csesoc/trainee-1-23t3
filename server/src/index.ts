@@ -43,7 +43,7 @@ app.post('/login', async (req: Request, res: Response) => {
   if (user === undefined) {
     res.status(403).json({ message: "Invalid email or password." });
   } else {
-    res.status(200).json({ id: user.email });
+    res.status(200).json({ username: user.username });
   }
 });
 
@@ -65,7 +65,7 @@ app.post('/register', async (req: Request, res: Response) => {
     };
 
     await addDoc(usersReference, newUser);
-    res.status(200).json({ email: email });
+    res.status(200).json({ username: username });
   }
 });
 
