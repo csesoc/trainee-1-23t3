@@ -5,96 +5,32 @@ import SearchInput from "../components/SearchInput";
 import Sidebar from "../components/Sidebar";
 import Spaces from "../components/Spaces";
 
-import spaceImage from "../assets/spaces/unsw-library.jpg";
-import axios, { AxiosResponse } from "axios";
+import { AxiosResponse } from "axios";
 import { getAxios } from "../axiosconfig";
-
-//////// HARDCODED DATA, DELETE LATER. ////////
-const allSpaces = [
-  [
-    {
-      title: "Space1",
-      image: spaceImage
-    },
-    {
-      title: "Space2",
-      image: spaceImage
-    },
-    {
-      title: "Space3",
-      image: spaceImage
-    },
-    {
-      title: "Space4",
-      image: spaceImage
-    },
-    {
-      title: "Space5",
-      image: spaceImage
-    },
-  ],
-  [
-    {
-      title: "Space6",
-      image: spaceImage
-    },
-    {
-      title: "Space7",
-      image: spaceImage
-    },
-    {
-      title: "Space8",
-      image: spaceImage
-    },
-    {
-      title: "Space9",
-      image: spaceImage
-    },
-    {
-      title: "Space10",
-      image: spaceImage
-    },
-  ],
-  [
-    {
-      title: "Space11",
-      image: spaceImage
-    },
-    {
-      title: "Space12",
-      image: spaceImage
-    },
-    {
-      title: "Space13",
-      image: spaceImage
-    },
-    {
-      title: "Space14",
-      image: spaceImage
-    },
-    {
-      title: "Space15",
-      image: spaceImage
-    },
-  ]
-];
-
-//////////////////////////////////////////////
+import { SpaceData } from "../components/types";
 
 export default function Catalogue() {
-  const [data, setData] = useState(allSpaces);
+  const [allSpaces, setAllSpaces] = useState<(SpaceData | undefined)[][] | null>(null)
+  const [data, setData] = useState<(SpaceData | undefined)[][] | null>(null);
 
   useEffect(() => {
     getAxios()
       .get('/catalogue')
       .then((res: AxiosResponse) => {
-        console.log(res.data);
+        const formattedData: (SpaceData | undefined)[][] = [];
+        while (res.data.length) formattedData.push(res.data.splice(0, 5));
+
+        const lastRow = formattedData[formattedData.length - 1];
+        formattedData[formattedData.length - 1] = Array.from({ ...lastRow, length: 5 })
+
+        setAllSpaces(formattedData);
+        setData(formattedData);
       })
       .catch((error) => {
         console.log(error);
       })
       .finally()
-  });
+  }, []);
 
   return (
     <div className="flex flex-row items-center justify-center">
@@ -102,8 +38,8 @@ export default function Catalogue() {
         <div className="flex flex-col bg-white w-[100%] h-[86%] text-black rounded-[30px] rounded-bl-none items-center">
           <Header />
           <Sidebar />
-          <SearchInput data={allSpaces} setData={setData} />
-          <Spaces data={data} />
+          <SearchInput allSpaces={allSpaces} setData={setData} />
+          {allSpaces != null && data !== null && <Spaces data={data} />}
         </div>
       </div>
     </div>

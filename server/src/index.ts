@@ -9,8 +9,6 @@ import {
   addDoc,
   updateDoc,
   doc,
-  query,
-  where
 } from 'firebase/firestore';
 
 const cors = require('cors');
