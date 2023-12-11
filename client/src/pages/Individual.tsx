@@ -1,15 +1,19 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import React from 'react';
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
 import CommentCard from "../components/CommentCard"
 import AttributeRating from "../components/AttributeRating";
 import AverageRating from "../components/AverageRating";
-import AddReview from '../components/AddReview';
+import Button from '../components/Button';
 export default function Individual() {
+  // useNavigate
+  const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const image = queryParams.get('image') ?? '';
   const title = queryParams.get('title') ?? '';
+  const url = `/review-page?title=${encodeURIComponent(title)}&image=${encodeURIComponent(image)}`;
   console.log(image)
   console.log(title)
   //////// HARDCODED DATA, DELETE LATER. ////////
@@ -53,8 +57,9 @@ export default function Individual() {
   const averageRating = data.reduce((acc, review) => acc + review.rating, 0) / data.length;
   const numberOfReviews = data.length;
 
-  const handleAddReview = () => {
-    alert('Add a review!')
+
+  const handleButtonClick = () => {
+    navigate('/review-page');
   }
   const handleBack = () => {
     alert('Go back!');
@@ -83,8 +88,10 @@ export default function Individual() {
               </div>
             </div>
             <div className="w-1/2 bg-[#AFDCF6] flex flex-col items-center justify-center">
-              <div className="flex items-center mt-4 h-[10%]" onClick={handleAddReview}>
-                <AddReview/>
+              <div className="flex items-center mt-4 h-[10%]" onClick={handleButtonClick}>
+                <a href={url}>
+                  <Button text="Add a review" />
+                </a>
               </div>
               <div className="overflow-scroll mt-4 h-[65%]">
                 {data.map((entry, index) => (
@@ -97,7 +104,7 @@ export default function Individual() {
                 ))}
               </div>
               <div className="w-full">
-                <AverageRating rating={averageRating} noOfReviews={numberOfReviews} />
+                <AverageRating title='Average Rating' rating={averageRating} noOfReviews={numberOfReviews} />
               </div>
             </div>
           </div>
