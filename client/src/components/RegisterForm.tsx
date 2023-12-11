@@ -1,4 +1,8 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getAxios } from '../axiosconfig';
+import { AxiosResponse } from 'axios';
+
 import TextInput from './TextInput';
 import PasswordInput from './PasswordInput';
 
@@ -9,17 +13,35 @@ const RegisterForm = () => {
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
 
+	const navigate = useNavigate();
+
 	// Reset error message
 	useEffect(() => {
 		setErrorMessage("");
-	}, [password, confirmPassword]);
+	}, [username, email, password, confirmPassword]);
 
 	const handleSubmit = () => {
-		if (password !== confirmPassword) {
+		if (username.trim() === "" || email.trim() === "" || password.trim() === "") {
+			setErrorMessage("Fields can not be empty.");  // Set error message
+			return;
+		} else if (password !== confirmPassword) {
 			setErrorMessage("Passwords do not match.");  // Set error message
 			return;
 		}
-		alert(`Username: ${username} Email: ${email} and Password: ${password} and confirmPassword: ${confirmPassword}`)
+
+		getAxios()
+			.post('/register', {
+				username: username,
+				email: email,
+				password: password
+			})
+			.then((res: AxiosResponse) => {
+				localStorage.setItem("username", res.data.username);
+				navigate("/");
+			})
+			.catch((err) => {
+				setErrorMessage(err.response.data.error);  // Set error message
+			});
 	};
 
 	return (
