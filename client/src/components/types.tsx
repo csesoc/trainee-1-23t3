@@ -4,5 +4,5 @@ export interface SpaceData {
 };
 
 export interface SpacesData {
-	data: SpaceData[][]
+	data: (SpaceData | undefined)[][]
 };

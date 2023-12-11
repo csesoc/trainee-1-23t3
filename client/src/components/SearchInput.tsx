@@ -3,15 +3,19 @@ import { useState } from "react";
 import searchIcon from "../assets/search-icon.png";
 import { SpaceData } from "./types";
 
-const SearchInput = ({ data, setData }: { data: any, setData: Function }) => {
+const SearchInput = ({ allSpaces, setData }: { allSpaces: any, setData: Function }) => {
 	const [searchQuery, setSearchQuery] = useState("");
 
 	const handleSearch = () => {
-		let data1d: SpaceData[] = [].concat(...data);
+		let data1d: SpaceData[] = [].concat(...allSpaces);
 
 		const filteredData1d = data1d.filter(space => {
-			const title = space.title.toLowerCase();
-			const query = searchQuery.toLowerCase();
+			if (space === undefined) {
+				return false;
+			};
+
+			const title = space.title.toLowerCase().trim();
+			const query = searchQuery.toLowerCase().trim();
 			return title.includes(query);
 		});
 

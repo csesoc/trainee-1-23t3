@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getAxios } from '../axiosconfig';
+
 import TextInput from './TextInput';
 import PasswordInput from './PasswordInput';
 
@@ -8,17 +11,33 @@ const ForgotPasswordForm = () => {
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [errorMessage, setErrorMessage] = useState("");
 
+	const navigate = useNavigate();
+
 	// Reset error message
 	useEffect(() => {
 		setErrorMessage("");
-	}, [password, confirmPassword]);
+	}, [email, password, confirmPassword]);
 
 	const handleSubmit = () => {
-		if (password !== confirmPassword) {
+		if (email.trim() === "" || password.trim() === "") {
+			setErrorMessage("Fields can not be empty.");  // Set error message
+			return;
+		} else if (password !== confirmPassword) {
 			setErrorMessage("Passwords do not match.");  // Set error message
 			return;
 		}
-		alert(`Email: ${email} and New password: ${password}`);
+
+		getAxios()
+			.put('/forgot', {
+				email: email,
+				password: password
+			})
+			.then(() => {
+				navigate("/login");
+			})
+			.catch((err) => {
+				setErrorMessage(err.response.data.error);  // Set error message
+			});
 	};
 
 	return (

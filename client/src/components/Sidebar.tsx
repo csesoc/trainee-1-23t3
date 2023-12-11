@@ -7,7 +7,8 @@ const Sidebar = () => {
 	};
 
 	const handleLogout = () => {
-		alert("You clicked the logout button");
+		localStorage.removeItem("username");
+		window.location.reload();
 	};
 
 	return (

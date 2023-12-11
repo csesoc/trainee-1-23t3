@@ -7,14 +7,18 @@ const Spaces = ({ data }: SpacesData) => {
 			{data.length === 0
 				? <p className="mt-10 text-5xl text-black font-extrabold">No spaces found</p>
 				: (data.map((row, i) => (
-					<div key={`row ${i}`} className="flex flex-row gap-10 pt-5 w-[100%] h-[100%]">
-						{row.map(space => (
+					<div
+						key={i}
+						className="flex flex-row gap-10 pt-5 w-[100%] h-[100%]"
+					>
+						{row.map((space, j) => (
 							space === undefined
-								? <div className="w-[20%] h-[15em]"></div>
+								? <div key={`row ${i}, col ${j}`} className="w-[20%] h-[15em]"></div>
 								: <SpaceCard key={space.title} title={space.title} image={space.image} />
 						))}
 					</div>
-				)))}
+				)))
+			}
 		</div>
 	)
 }
