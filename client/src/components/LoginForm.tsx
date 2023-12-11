@@ -34,7 +34,7 @@ const LoginForm = () => {
 				navigate("/");
 			})
 			.catch((err) => {
-				setErrorMessage(err.response.data.message);  // Set error message
+				setErrorMessage(err.response.data.error);  // Set error message
 			});
 	};
 

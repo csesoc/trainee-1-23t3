@@ -2,7 +2,6 @@ import SpaceCard from "./SpaceCard";
 import { SpacesData } from "./types";
 
 const Spaces = ({ data }: SpacesData) => {
-	console.log(data);
 	return (
 		<div className="flex flex-col overflow-auto mt-2 px-5 w-[95%] h-[78%] items-center">
 			{data.length === 0

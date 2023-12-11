@@ -1,15 +1,12 @@
 import express, { Request, Response } from 'express';
 import { SERVER_PORT } from '../../config.json';
 import { getDb } from './utils/db';
-import {
-  Firestore,
-  getDocs,
-  collection,
-  CollectionReference,
-  addDoc,
-  updateDoc,
-  doc,
-} from 'firebase/firestore';
+import { Firestore } from 'firebase/firestore';
+
+import { catalogue } from './catalogue';
+import { login } from './login';
+import { register } from './register';
+import { forgot } from './forgot';
 
 const cors = require('cors');
 const app = express();
@@ -24,66 +21,40 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.get('/catalogue', async (req: Request, res: Response) => {
-  const spacesReference: CollectionReference = collection(db, 'spaces');
-  const docsSnapshot = await getDocs(spacesReference);
-
-  res.json(docsSnapshot.docs.map(d => d.data()));
+  const result = await catalogue(db);
+  res.json(result);
 });
 
 app.post('/login', async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
-  const usersReference: CollectionReference = collection(db, 'users');
-  const docsSnapshot = await getDocs(usersReference);
-  const users = docsSnapshot.docs.map(d => d.data());
-
-  const user = users.filter(user => user.email === email && user.password === password)[0];
-  if (user === undefined) {
-    res.status(403).json({ message: "Invalid email or password." });
+  const result = await login(db, email, password);
+  if (result.error) {
+    res.status(403).json(result);
   } else {
-    res.status(200).json({ username: user.username });
-  }
+    res.status(200).json(result);
+  };
 });
 
 app.post('/register', async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
 
-  const usersReference: CollectionReference = collection(db, 'users');
-  const docsSnapshot = await getDocs(usersReference);
-  const users = docsSnapshot.docs.map(d => d.data());
-
-  const emailTaken = users.filter(user => user.email === email).length > 0;
-  if (emailTaken) {
-    res.status(403).json({ message: "Email has already been taken." });
+  const result = await register(db, username, email, password);
+  if (result.error) {
+    res.status(403).json(result);
   } else {
-    const newUser = {
-      username: username,
-      email: email,
-      password: password
-    };
-
-    await addDoc(usersReference, newUser);
-    res.status(200).json({ username: username });
-  }
+    res.status(200).json(result);
+  };
 });
 
 app.put('/forgot', async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
-  const usersReference: CollectionReference = collection(db, 'users');
-  const docsSnapshot = await getDocs(usersReference);
-  const users = docsSnapshot.docs.map(d => {
-    const id = d.id;
-    const email = d.data().email;
-    return { id, email };
-  });
-
-  const user = users.filter(user => user.email === email)[0];
-  if (user === undefined) {
-    res.status(403).json({ message: "Invalid email, user does not exist." });
+  const result = await forgot(db, email, password);
+  if (result.error) {
+    res.status(403).json(result);
   } else {
-    await updateDoc(doc(db, "users", user.id), { password: password });
-    res.status(200).json({});
+    res.status(200).json(result);
   }
 });
 

@@ -27,7 +27,7 @@ export default function Catalogue() {
         setData(formattedData);
       })
       .catch((error) => {
-        console.log(error);
+        alert(error);
       })
       .finally()
   }, []);
