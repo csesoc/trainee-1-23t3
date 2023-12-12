@@ -7,6 +7,8 @@ import { catalogue } from './catalogue';
 import { login } from './login';
 import { register } from './register';
 import { forgot } from './forgot';
+import { getIndividualSpace } from './individual';
+import { review } from './review';
 
 const cors = require('cors');
 const app = express();
@@ -24,6 +26,31 @@ app.get('/catalogue', async (req: Request, res: Response) => {
   const result = await catalogue(db);
   res.json(result);
 });
+
+app.get('/space/:spaceTitle', async (req: Request, res: Response) => {
+  const spaceTitle = req.params.spaceTitle;
+  const result = await getIndividualSpace(db, spaceTitle);
+
+  if (result) {
+    res.status(200).json(result);
+  } else {
+    res.status(404).json(result);
+  }
+});
+
+
+app.post('/space/:spaceTitle/review', async (req: Request, res: Response) => {
+  const spaceTitle = req.params.spaceTitle;
+  const newReview = req.body;
+
+  const result = await review(db, spaceTitle, newReview);
+  if (result) {
+    res.status(200).json(result);
+  } else {
+    res.status(404).json(result);
+  }
+});
+
 
 app.post('/login', async (req: Request, res: Response) => {
   const { email, password } = req.body;
@@ -46,6 +73,7 @@ app.post('/register', async (req: Request, res: Response) => {
     res.status(200).json(result);
   };
 });
+
 
 app.put('/forgot', async (req: Request, res: Response) => {
   const { email, password } = req.body;

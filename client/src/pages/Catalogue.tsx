@@ -25,6 +25,7 @@ export default function Catalogue() {
 
         setAllSpaces(formattedData);
         setData(formattedData);
+        console.log(formattedData)
       })
       .catch((error) => {
         alert(error);

@@ -6,9 +6,9 @@ import { useNavigate } from 'react-router-dom';
 
 const SpaceCard = ({ title, image }: SpaceCard) => {
   const navigate = useNavigate();
-  const url = `/individual?title=${encodeURIComponent(title)}&image=${encodeURIComponent(image)}`;
+  // const url = `/individual?title=${encodeURIComponent(title)}&image=${encodeURIComponent(image)}`;
   const handleClick = () => {
-		navigate(url);
+		navigate('/individual', { state: { title } });
 	};
   return (
     <div
