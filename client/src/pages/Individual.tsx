@@ -36,7 +36,6 @@ export default function Individual() {
     getAxios().get(`/space/${encodeURIComponent(spaceTitle)}`)
       .then((response: AxiosResponse) => {
         setSpaceData(response.data);
-        console.log(response.data)
         const newAverage = (response.data.privacy + response.data.convenience + response.data.noise) / 3;
         setAverageRating(newAverage);
         setNoOfReviews(response.data.reviews.length);
