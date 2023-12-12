@@ -91,7 +91,7 @@ export default function Individual() {
                 <img src={spaceData.image} alt="Space-image" className="rounded-3xl object-cover h-5/12 w-5/12" />
               </div>
             </div>
-            <div className="w-1/2 bg-[#AFDCF6] flex flex-col items-center justify-center">
+            <div className="w-1/2 bg-[#AFDCF6] flex flex-col items-center justify-center h-full">
               <div className="flex items-center mt-4 h-[10%]" onClick={handleButtonClick}>
                 <Button text="Add a review" />
               </div>
@@ -100,7 +100,7 @@ export default function Individual() {
                   Review submitted successfully!
                 </div>
               )}
-              <div className="overflow-scroll mt-4 h-[65%]">
+              <div className="overflow-scroll mt-4 h-[65%] flex-grow">
                 {spaceData?.reviews.map((entry, index) => (
                   <CommentCard
                     key={index}
@@ -110,7 +110,7 @@ export default function Individual() {
                   />
                 ))}
               </div>
-              <div className="w-full">
+              <div className="w-full flex-shrink-0">
                 <AverageRating title='Average Rating' rating={averageRating} noOfReviews={noOfReviews} />
               </div>
             </div>

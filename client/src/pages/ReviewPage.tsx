@@ -96,14 +96,14 @@ export default function Individual() {
                 <img src={spaceImage} alt="space-image" className="rounded-3xl object-contain h-5/12 w-5/12" />
               </div>
             </div>
-            <div className="w-1/2 bg-[#AFDCF6] flex flex-col items-center justify-center">
-              <div className="textarea-container h-[65%] w-full">
+            <div className="w-1/2 bg-[#AFDCF6] flex flex-col items-center justify-center h-full">
+              <div className="textarea-container h-[65%] w-full flex-grow">
                 <textarea placeholder="Write a comment..." className="text-2xl comment-textarea w-[90%] h-[90%] mt-4 bg-white rounded-lg p-2 shadow-lg focus:ring-blue-500 focus:border-blue-500" value={commentReview} onChange={(e) => handleCommentChange(e.target.value)}></textarea>
               </div>
               <div className="flex items-center h-[10%] mb-2" onClick={handleButtonClick}>
                 <Button text="Submit" />
               </div>
-              <div className="w-full">
+              <div className="w-full flex-shrink-0">
                 <AverageRating title='Overall Rating' rating={overallRating} />
               </div>
             </div>
