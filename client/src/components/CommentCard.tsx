@@ -16,10 +16,13 @@ const CommentCard = ({ username, text, rating }: commentInterface) => {
           <h5 className="text-2xl font-bold p-1">{username}</h5>
           <p className="text-lg p-1">{text}</p>
         </div>
-        <Rating value={averageRating} />
+        <div className="flex-shrink-0">
+          <Rating value={averageRating} />
+        </div>
       </div>
     </div>
   );
 };
 
 export default CommentCard;
+

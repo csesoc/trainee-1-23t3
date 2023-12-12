@@ -6,6 +6,7 @@ import EditAttribute from "../components/EditAttributeRating";
 import AverageRating from "../components/AverageRating";
 import Button from '../components/Button';
 import { getAxios } from "../axiosconfig";
+import BackButton from '../components/BackButton';
 export default function Individual() {
   const navigate = useNavigate();
   const [commentReview, setCommentReview] = useState('');
@@ -50,18 +51,15 @@ export default function Individual() {
 
     } catch (error) {
       console.error("Error submitting review: ", error);
+    } finally {
+      navigate(-1);
     }
   };
 
 
   const handleCommentChange = (comment: string) => {
-    console.log(comment);
     setCommentReview(comment);
   };
-
-  const handleBack = () => {
-    alert('Go back!');
-  }
   return (
     <div className="flex flex-row items-center justify-center">
       <div className="flex w-200 w-[90%] h-screen justify-center items-center">
@@ -71,7 +69,9 @@ export default function Individual() {
           <div className="flex w-full h-[90%]">
             <div className="w-1/2 flex flex-col">
               <div className="flex">
-                <span className="flex ml-8 pt-2 cursor-pointer text-zinc-500 text-base" onClick={handleBack}>Back</span>
+                <BackButton className="flex ml-8 pt-2 cursor-pointer text-zinc-500 text-base">
+                  Back
+                </BackButton>
                 <h1 className="text-5xl font-bold pl-20 pt-2">Submit a review</h1>
               </div>
               <div className="flex justify-center items-start">

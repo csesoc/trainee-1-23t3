@@ -9,6 +9,7 @@ import Button from '../components/Button';
 import { AxiosResponse } from "axios";
 import { getAxios } from "../axiosconfig";
 import { SpaceData } from '../components/types';
+import BackButton from '../components/BackButton';
 export default function Individual() {
   // useNavigate
   const navigate = useNavigate();
@@ -51,9 +52,6 @@ export default function Individual() {
       navigate('/login');
     }
   }
-  const handleBack = () => {
-    alert('Go back!');
-  }
   return (
     <div className="flex flex-row items-center justify-center">
       <div className="flex w-200 w-[90%] h-screen justify-center items-center">
@@ -64,7 +62,9 @@ export default function Individual() {
             {error}
             <div className="w-1/2 flex flex-col">
               <div>
-                <span className="flex items-start ml-8 pt-2 cursor-pointer text-zinc-500 text-base" onClick={handleBack}>Back</span>
+                <BackButton className="flex ml-8 pt-2 cursor-pointer text-zinc-500 text-base">
+                  Back
+                </BackButton>
               </div>
               <div className="flex items-start ml-14 py-1">
                 <h1 className="text-5xl text-left font-bold">{decodeURIComponent(title)}</h1>
@@ -76,7 +76,7 @@ export default function Individual() {
 
               </div>
               <div className="flex items-center justify-center">
-                <img src={spaceData.image} alt="Space-image" className="rounded-3xl object-contain h-5/12 w-5/12" />
+                <img src={spaceData.image} alt="Space-image" className="rounded-3xl object-cover h-5/12 w-5/12" />
               </div>
             </div>
             <div className="w-1/2 bg-[#AFDCF6] flex flex-col items-center justify-center">
