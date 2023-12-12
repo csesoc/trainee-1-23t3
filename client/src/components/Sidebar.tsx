@@ -1,9 +1,10 @@
 import homeIcon from "../assets/home-icon.png";
 import logoutIcon from "../assets/logout-icon.png";
-
+import { useNavigate } from 'react-router-dom';
 const Sidebar = () => {
+	const navigate = useNavigate();
 	const handleHome = () => {
-		alert("You clicked the home button");
+		navigate('/');
 	};
 
 	const handleLogout = () => {
