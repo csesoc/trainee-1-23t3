@@ -16,11 +16,20 @@ export default function Individual() {
   const location = useLocation();
   const { title } = location.state || {};
   const username = localStorage.getItem("username");
+  // useState
   const [averageRating, setAverageRating] = useState(0);
   const [noOfReviews, setNoOfReviews] = useState(0);
   const [spaceData, setSpaceData] = useState<SpaceData | null>(null);
-  const [error, setError] = useState(null);
+  const [showReviewSuccess, setShowReviewSuccess] = useState(false);
 
+  useEffect(() => {
+    if (location.state?.reviewSubmitted) {
+      setShowReviewSuccess(true);
+      setTimeout(() => {
+        setShowReviewSuccess(false);
+      }, 5000);
+    }
+  }, [location.state]);
   const spaceTitle = title;
 
   useEffect(() => {
@@ -34,13 +43,19 @@ export default function Individual() {
       })
       .catch(error => {
         console.error("Error fetching space data: ", error);
-        setError(error);
       });
   }, [spaceTitle]);
 
   // Check if data is loaded
   if (!spaceData) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="text-center">
+          <span className="text-2xl font-bold">Loading...</span>
+        </div>
+      </div>
+
+    )
   }
 
   const handleButtonClick = () => {
@@ -48,8 +63,7 @@ export default function Individual() {
       // Navigate to ReviewPage with necessary state
       navigate('/review-page', { state: { spaceTitle: title, spaceImage: spaceData.image } });
     } else {
-      alert('Please log in to add a review.');
-      navigate('/login');
+      navigate('/login', { state: { loggedIn: false } });
     }
   }
   return (
@@ -59,10 +73,9 @@ export default function Individual() {
           <Header />
           <Sidebar />
           <div className="flex w-full h-[90%]">
-            {error}
             <div className="w-1/2 flex flex-col">
               <div>
-                <BackButton className="flex ml-8 pt-2 cursor-pointer text-zinc-500 text-base">
+                <BackButton className="flex ml-8 pt-2 cursor-pointer text-zinc-500 text-base" path="/">
                   Back
                 </BackButton>
               </div>
@@ -83,6 +96,11 @@ export default function Individual() {
               <div className="flex items-center mt-4 h-[10%]" onClick={handleButtonClick}>
                 <Button text="Add a review" />
               </div>
+              {showReviewSuccess && (
+                <div className=" top-5 right-5 bg-green-200 text-green-800 px-4 py-2 rounded-md">
+                  Review submitted successfully!
+                </div>
+              )}
               <div className="overflow-scroll mt-4 h-[65%]">
                 {spaceData?.reviews.map((entry, index) => (
                   <CommentCard
@@ -92,7 +110,6 @@ export default function Individual() {
                     rating={[entry.privacy, entry.noise, entry.convenience]}
                   />
                 ))}
-
               </div>
               <div className="w-full">
                 <AverageRating title='Average Rating' rating={averageRating} noOfReviews={noOfReviews} />

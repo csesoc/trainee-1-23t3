@@ -14,6 +14,7 @@ export default function Individual() {
   const [convenienceRating, setConvenienceRating] = useState(0);
   const [privacyRating, setPrivacyRating] = useState(0);
   const [overallRating, setOverallRating] = useState(0);
+
   const location = useLocation();
   const { spaceTitle, spaceImage } = location.state || {};
   const handleNoiseRatingChange = (newRating: number) => {
@@ -35,7 +36,6 @@ export default function Individual() {
   const handleButtonClick = async () => {
     const username = localStorage.getItem("username");
     if (!username) {
-      alert('Please log in to submit a review.');
       navigate('/login');
       return;
     }
@@ -48,11 +48,9 @@ export default function Individual() {
         privacy: privacyRating
       });
       console.log('Successful!')
-
+      navigate('/individual', { state: { title: spaceTitle, reviewSubmitted: true } });
     } catch (error) {
       console.error("Error submitting review: ", error);
-    } finally {
-      navigate(-1);
     }
   };
 
@@ -61,7 +59,7 @@ export default function Individual() {
     setCommentReview(comment);
   };
   return (
-    <div className="flex flex-row items-center justify-center">
+    <div className={`flex flex-row items-center justify-center`}>
       <div className="flex w-200 w-[90%] h-screen justify-center items-center">
         <div className="flex flex-col bg-white w-[100%] h-[86%] text-black rounded-[30px] rounded-bl-none items-center overflow-hidden">
           <Header />
@@ -69,7 +67,7 @@ export default function Individual() {
           <div className="flex w-full h-[90%]">
             <div className="w-1/2 flex flex-col">
               <div className="flex">
-                <BackButton className="flex ml-8 pt-2 cursor-pointer text-zinc-500 text-base">
+                <BackButton className="flex ml-8 pt-2 cursor-pointer text-zinc-500 text-base" path="/individual" state={{ title: spaceTitle }}>
                   Back
                 </BackButton>
                 <h1 className="text-5xl font-bold pl-20 pt-2">Submit a review</h1>
